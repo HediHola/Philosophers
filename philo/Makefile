@@ -6,7 +6,7 @@
 #    By: htizi <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/12 15:14:35 by htizi             #+#    #+#              #
-#    Updated: 2021/12/14 11:21:11 by htizi            ###   ########.fr        #
+#    Updated: 2021/12/14 16:20:50 by htizi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS			=		main.c
 SRCS_BASENAME	=		$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS			=		$(SRCS_BASENAME:.c=.o)
 CC				=		clang
-FLAGS			=		-Werror -Wall -Wextra -I $(INC_DIR)
+FLAGS			=		-Werror -Wall -Wextra -I $(INC_DIR) -fsanitize=address 
 
 .c.o			:
 				$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
@@ -26,7 +26,7 @@ FLAGS			=		-Werror -Wall -Wextra -I $(INC_DIR)
 all				:	$(NAME)
 
 $(NAME)			:	$(OBJS)
-				$(CC) $(FLAGS) -o $(NAME) $(OBJS)
+				$(CC) $(FLAGS) -o $(NAME) $(OBJS)  
 				@echo [$(NAME)] : Created !
 
 clean			:
