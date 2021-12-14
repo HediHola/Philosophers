@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:54:58 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/13 18:02:19 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/14 11:32:42 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <pthread.h>
 
 typedef struct s_philo {
 	unsigned int			n_philos;
