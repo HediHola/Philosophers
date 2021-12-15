@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:54:58 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/14 17:13:27 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/15 17:26:54 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@
 # include <errno.h>
 # include <sys/time.h>
 
+typedef struct t_info
+{
+	unsigned int	n_meals;
+	unsigned int	n_philos;
+	unsigned int	t_start;
+	int				stop;
+	pthread_mutex_t	m_stop;
+	pthread_mutex_t	m_msg;
+	pthread_mutex_t	m_last_eat;
+}	t_info;
+
 typedef struct s_philo {
 	unsigned int			n_philos;
 	unsigned int			n_meals;
@@ -31,5 +42,16 @@ typedef struct s_philo {
 	pthread_mutex_t			*r_fork;
 	pthread_mutex_t			*l_fork;
 }	t_philo;
+
+int				malloc_threads_and_forks(pthread_t **thread,
+					pthread_mutex_t **forks, t_philo *philo);
+t_philo			*init_philo(int argc, char **argv, pthread_t *thread,
+					pthread_mutex_t *forks);
+int				free_vars(t_philo *philo, pthread_t *thread,
+					pthread_mutex_t *forks, int flag);
+void			distribute_forks(t_philo *philo, pthread_mutex_t *forks,
+					unsigned int n);
+unsigned int	get_time(void);
+void			init_info(t_info *info, t_philo philo);
 
 #endif

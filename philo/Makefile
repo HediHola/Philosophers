@@ -6,14 +6,15 @@
 #    By: htizi <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/12 15:14:35 by htizi             #+#    #+#              #
-#    Updated: 2021/12/14 16:20:50 by htizi            ###   ########.fr        #
+#    Updated: 2021/12/15 13:31:32 by htizi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=		philo
 INC_DIR			=		./inc/
 SRCS_DIR		=		./srcs/
-SRCS			=		main.c
+SRCS			=		main.c			\
+						init.c
 
 SRCS_BASENAME	=		$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS			=		$(SRCS_BASENAME:.c=.o)
