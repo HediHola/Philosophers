@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 12:25:29 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/15 17:25:05 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/16 07:37:28 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,20 @@ t_philo	*init_philo(int argc, char **argv, pthread_t *thread,
 	return (philo);
 }
 
-void	init_info(t_info *info, t_philo philo)
+void	init_info(t_info *info, t_philo *philo)
 {
-	info->n_philos = philo.n_philos;
-	info->n_meals = philo.n_meals;
+	unsigned int	i;
+
+	i = 0;
+	info->n_philos = philo->n_philos;
+	info->n_meals = philo->n_meals;
 	info->stop = 0;
 	pthread_mutex_init(&info->m_stop, NULL);
 	pthread_mutex_init(&info->m_msg, NULL);
 	pthread_mutex_init(&info->m_last_eat, NULL);
+	while (i < philo[0].n_philos)
+	{
+		philo[i].info = info;
+		i++;
+	}
 }

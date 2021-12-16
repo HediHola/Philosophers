@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:54:58 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/16 05:46:42 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/16 07:36:11 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <errno.h>
 # include <sys/time.h>
 
-typedef struct t_info
+typedef struct s_info
 {
 	unsigned int	n_meals;
 	unsigned int	n_philos;
@@ -37,8 +37,10 @@ typedef struct s_philo {
 	unsigned int			t_die;
 	unsigned int			t_eat;
 	unsigned int			t_sleep;
+	unsigned int			last_meal;
 	unsigned int			id;
-	pthread_t				faucheuse;
+	t_info					*info;
+	pthread_t				reaper;
 	pthread_mutex_t			*r_fork;
 	pthread_mutex_t			*l_fork;
 }	t_philo;
@@ -52,7 +54,7 @@ int				free_vars(t_philo *philo, pthread_t *thread,
 void			distribute_forks(t_philo *philo, pthread_mutex_t *forks,
 					unsigned int n);
 unsigned int	get_time(void);
-void			init_info(t_info *info, t_philo philo);
+void			init_info(t_info *info, t_philo *philo);
 void			launch_threading(pthread_t *thread, t_info *info,
 					t_philo *philo, pthread_mutex_t *forks);
 void			destroy_mutex(t_info *info, pthread_mutex_t *forks);

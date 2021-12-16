@@ -6,11 +6,27 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 05:36:59 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/16 05:45:51 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/16 08:40:00 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
+		write(fd, "\n", 1);
+	}
+}
 
 void	destroy_mutex(t_info *info, pthread_mutex_t *forks)
 {
@@ -27,13 +43,23 @@ void	destroy_mutex(t_info *info, pthread_mutex_t *forks)
 	pthread_mutex_destroy(&info->m_stop);
 }
 
-void	*routine(void *philo_src)
+void	*routine(void *arg)
 {
-	t_philo	*philo_dest;
+	t_philo	*philo;
+	int		stop;
 
-	philo_dest = (t_philo *) philo_src;
-	printf("thread : I'm philo %u\n", philo_dest->id);
-	philo_dest->id *= 2;
+	stop = 0;
+	philo = (t_philo *) arg;
+	philo->last_meal = philo->info->t_start;
+	if (pthread_create(&philo->reaper, NULL, &is_dead, philo))
+	{
+		stop = 1;
+		ft_putendl_fd("pthread_create has failed", 2);
+	}
+	pthread_detach(philo->reaper);
+/*	while (!stop)
+	{
+*/
 	return (NULL);
 }
 

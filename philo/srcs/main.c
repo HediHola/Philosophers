@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/16 06:44:29 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/16 07:40:03 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	philo = init_philo(argc, argv, thread, forks);
-	init_info(&info, *philo);
+	init_info(&info, philo);
 	malloc_threads_and_forks(&thread, &forks, philo);
 	distribute_forks(philo, forks, info.n_philos);
 	launch_threading(thread, &info, philo, forks);
-	//destroy_mutex(&info, forks);
+	destroy_mutex(&info, forks);
 	free_vars(philo, thread, forks, 0);
 	return (0);
 }
