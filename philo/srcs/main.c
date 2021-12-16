@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/15 17:24:43 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/15 22:47:20 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	free_vars(t_philo *philo, pthread_t *thread,
 	if (flag == -1)
 	{	
 		perror("malloc error");
-		exit (-1);
+		exit (0);
 	}
 	return (0);
 }
@@ -50,7 +50,7 @@ int	check_arg(int argc, char **argv)
 	}
 	return (1);
 }
-/*
+
 void	launch_threading(pthread_t *thread, t_info *info, t_philo *philo); 
 {
 	int				i;
@@ -58,8 +58,11 @@ void	launch_threading(pthread_t *thread, t_info *info, t_philo *philo);
 	
 	i = 0;
 	info->t_start = get_time();
+	while (i < info->n_philo)
+	{
+		if
 }
-*/
+
 int	main(int argc, char **argv)
 {
 	t_philo			*philo;
