@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/15 22:47:20 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/16 06:44:29 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ int	free_vars(t_philo *philo, pthread_t *thread,
 		free(thread);
 	if (forks)
 		free(forks);
-	if (flag == -1)
-	{	
-		perror("malloc error");
+	if (flag < 0)
+	{
+		if (flag == -1)
+			perror("malloc error");
+		if (flag == -2)
+			perror("pthread_create has failed");
+		if (flag == -3)
+			perror("pthread_join has failed");
 		exit (0);
 	}
 	return (0);
@@ -51,18 +56,6 @@ int	check_arg(int argc, char **argv)
 	return (1);
 }
 
-void	launch_threading(pthread_t *thread, t_info *info, t_philo *philo); 
-{
-	int				i;
-	unsigned int	time;
-	
-	i = 0;
-	info->t_start = get_time();
-	while (i < info->n_philo)
-	{
-		if
-}
-
 int	main(int argc, char **argv)
 {
 	t_philo			*philo;
@@ -81,7 +74,8 @@ int	main(int argc, char **argv)
 	init_info(&info, *philo);
 	malloc_threads_and_forks(&thread, &forks, philo);
 	distribute_forks(philo, forks, info.n_philos);
-//	launch_threading(thread, &info, philo); 
+	launch_threading(thread, &info, philo, forks);
+	//destroy_mutex(&info, forks);
 	free_vars(philo, thread, forks, 0);
 	return (0);
 }
