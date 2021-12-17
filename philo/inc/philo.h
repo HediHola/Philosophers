@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:54:58 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/16 07:36:11 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/17 01:23:46 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_philo {
 	unsigned int			t_sleep;
 	unsigned int			last_meal;
 	unsigned int			id;
+	int						stop;
 	t_info					*info;
 	pthread_t				reaper;
 	pthread_mutex_t			*r_fork;

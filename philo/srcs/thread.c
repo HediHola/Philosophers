@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 05:36:59 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/16 08:40:00 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/17 01:22:34 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,32 @@ void	destroy_mutex(t_info *info, pthread_mutex_t *forks)
 	pthread_mutex_destroy(&info->m_last_eat);
 	pthread_mutex_destroy(&info->m_msg);
 	pthread_mutex_destroy(&info->m_stop);
+}
+
+void	*is_dead(void *arg)
+{
+	t_philo	*philo;
+	int	stop;
+
+	philo = (t_philo *)arg;
+	stop = 0;
+	while (!stop)
+	{
+		pthread_mutex_lock(&philo->info->m_last_eat);
+		if (get_time() - philo->last_meal >= philo->t_die)
+		{
+			pthread_mutex_unlock(&philo->info->m_last_eat);
+			pthread_mutex_lock(&philo->info->m_msg);
+			printf("died");
+			pthread_mutex_unlock(&philo->info->m_msg);
+		}
+		else
+			pthread_mutex_unlock(&philo->info->m_last_eat);
+		pthread_mutex_lock(&philo->info->m_stop);
+		stop = philo->info->stop + philo->stop;
+		pthread_mutex_unlock(&philo->info->m_stop);
+	}
+	return (NULL);
 }
 
 void	*routine(void *arg)
