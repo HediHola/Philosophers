@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/16 07:40:03 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/17 14:54:15 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv)
 	malloc_threads_and_forks(&thread, &forks, philo);
 	distribute_forks(philo, forks, info.n_philos);
 	launch_threading(thread, &info, philo, forks);
-	destroy_mutex(&info, forks);
+	destroy_mutex(&info, philo, forks);
 	free_vars(philo, thread, forks, 0);
 	return (0);
 }
