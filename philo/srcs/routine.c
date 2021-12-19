@@ -6,7 +6,7 @@
 /*   By: htizi <htizi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:56:20 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 01:45:48 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 01:49:44 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	right_handed(t_philo *philo)
 	pthread_mutex_lock(philo->l_fork);
 	pthread_mutex_lock(&philo->info->m_msg);
 	printf("%d   %d   has taken a fork\n", get_time() - philo->info->t_start, philo->id);
-	pthread_mutex_unlock(&philo->info->m_msg);
-	pthread_mutex_lock(&philo->info->m_msg);
+	pthread_mutex_unlock(&philo->info->m_msg);// should I delete it
+	pthread_mutex_lock(&philo->info->m_msg);// should I delete it
 	printf("%d   %d   is eating\n", get_time() - philo->info->t_start, philo->id);
 	pthread_mutex_unlock(&philo->info->m_msg);
 	philo->n_meals_had++;
