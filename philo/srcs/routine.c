@@ -6,7 +6,7 @@
 /*   By: htizi <htizi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:56:20 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 01:49:44 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 15:35:45 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	right_handed(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
-	pthread_mutex_unlock(&philo->info->m_msg);
+	pthread_mutex_lock(&philo->info->m_msg);
 	printf("%d   %d   has taken a fork\n", get_time() - philo->info->t_start, philo->id);
 	pthread_mutex_unlock(&philo->info->m_msg);
 	if (philo->n_philos == 1)
