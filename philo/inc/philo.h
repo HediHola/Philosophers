@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:54:58 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 15:42:26 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 17:18:52 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void			destroy_mutex(t_info *info, t_philo *philo,
 					pthread_mutex_t *forks);
 void			routine(t_philo *philo);
 void			ft_usleep(unsigned int time_in_ms);
-void      print_status(t_philo *philo, int index);
+void			print_status(t_philo *philo, int index);
 
 #endif

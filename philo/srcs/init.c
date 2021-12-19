@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 12:25:29 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 00:41:04 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 17:27:11 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_philo	*init_philo(int argc, char **argv, pthread_t *thread,
 		philo[i].t_eat = char_to_uint(argv[3]);
 		philo[i].t_sleep = char_to_uint(argv[4]);
 		philo[i].id = i + 1;
+		philo[i].is_full = 0;
 		if (argc == 6)
 			philo[i].n_meals_to_have = char_to_uint(argv[5]);
 		else
