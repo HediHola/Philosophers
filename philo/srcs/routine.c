@@ -6,7 +6,7 @@
 /*   By: htizi <htizi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:56:20 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 01:25:39 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 01:45:48 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	right_handed(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->m_msg);
 	printf("%d   %d   has taken a fork\n", get_time() - philo->info->t_start, philo->id);
 	pthread_mutex_unlock(&philo->info->m_msg);
-/*	if (philo->n == 1)
+	if (philo->n_philos == 1)
 	{
 		pthread_mutex_unlock(philo->r_fork);
 		ft_usleep(philo->t_die);
 		return ;
 	}
-*/	pthread_mutex_lock(philo->l_fork);
+	pthread_mutex_lock(philo->l_fork);
 	pthread_mutex_lock(&philo->info->m_msg);
 	printf("%d   %d   has taken a fork\n", get_time() - philo->info->t_start, philo->id);
 	pthread_mutex_unlock(&philo->info->m_msg);
@@ -46,13 +46,13 @@ void	left_handed(t_philo *philo)
 	pthread_mutex_lock(&philo->info->m_msg);
 	printf("%d   %d   has taken a fork\n", get_time() - philo->info->t_start, philo->id);
 	pthread_mutex_unlock(&philo->info->m_msg);
-/*	if (p->n == 1)
+	if (philo->n_philos == 1)
 	{
 		pthread_mutex_unlock(philo->l_fork);
 		ft_usleep(philo->t_die);
 		return ;
 	}
-*/	pthread_mutex_lock(philo->r_fork);
+	pthread_mutex_lock(philo->r_fork);
 	pthread_mutex_lock(&philo->info->m_msg);
 	printf("%d   %d   has taken a fork\n", get_time() - philo->info->t_start, philo->id);
 	pthread_mutex_unlock(&philo->info->m_msg);
@@ -94,6 +94,6 @@ void	routine(t_philo *philo)
 	pthread_mutex_lock(&philo->info->m_stop);
 	printf("%d   %d   is thinking\n", get_time() - philo->info->t_start, philo->id);
 	pthread_mutex_unlock(&philo->info->m_stop);
-	if (philo->n_philos % 2 != 0)
-		ft_usleep(100);
+//	if (philo->n_philos % 2 != 0)
+//		ft_usleep(100);
 }
