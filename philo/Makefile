@@ -6,7 +6,7 @@
 #    By: htizi <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/12 15:14:35 by htizi             #+#    #+#              #
-#    Updated: 2021/12/17 16:24:44 by htizi            ###   ########.fr        #
+#    Updated: 2021/12/19 00:01:51 by htizi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS_DIR		=		./srcs/
 SRCS			=		main.c			\
 						init.c			\
 						thread.c		\
-						time.c			
+						routine.c		\
+						time.c
 
 SRCS_BASENAME	=		$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS			=		$(SRCS_BASENAME:.c=.o)

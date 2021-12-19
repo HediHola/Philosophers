@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/17 14:54:15 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 00:38:15 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,28 @@
 int	free_vars(t_philo *philo, pthread_t *thread,
 		pthread_mutex_t *forks, int flag)
 {
+	if (flag == PTHREAD_CREATE || flag == PTHREAD_JOIN)
+	{
+		pthread_mutex_lock(&philo->info->m_stop);
+		philo->info->is_dead = 1;
+		pthread_mutex_unlock(&philo->info->m_stop);
+		pthread_mutex_lock(&philo->info->m_msg);
+		if (flag == PTHREAD_CREATE)
+			perror("pthread_create has failed");
+		if (flag == PTHREAD_JOIN)
+			perror("pthread_join has failed");	
+		pthread_mutex_unlock(&philo->info->m_msg); // p-e à suppr
+		return (0);
+	}
 	if (philo)
 		free (philo);
 	if (thread)
 		free(thread);
 	if (forks)
 		free(forks);
-	if (flag < 0)
-	{
-		if (flag == -1)
-			perror("malloc error");
-		if (flag == -2)
-			perror("pthread_create has failed");
-		if (flag == -3)
-			perror("pthread_join has failed");
+	if (flag == MALLOC)
+	{		
+		perror("malloc error");
 		exit (0);
 	}
 	return (0);
@@ -53,6 +61,8 @@ int	check_arg(int argc, char **argv)
 		}
 		i++;
 	}
+	if (argc == 6 && (char_to_uint(argv[5]) == 0))
+		return (-1);
 	return (1);
 }
 
@@ -76,6 +86,6 @@ int	main(int argc, char **argv)
 	distribute_forks(philo, forks, info.n_philos);
 	launch_threading(thread, &info, philo, forks);
 	destroy_mutex(&info, philo, forks);
-	free_vars(philo, thread, forks, 0);
+	free_vars(philo, thread, forks, INDEX);
 	return (0);
 }

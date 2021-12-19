@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:54:58 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/17 16:35:12 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 00:42:21 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,17 @@
 # include <errno.h>
 # include <sys/time.h>
 
+enum
+{
+	MALLOC,
+	PTHREAD_CREATE,
+	PTHREAD_JOIN,
+	INDEX
+};
+
 typedef struct s_info
 {
-	unsigned int	n_meals;
+	unsigned int	n_meals_to_have;
 	unsigned int	n_philos;
 	unsigned int	t_start;
 	int				is_dead;
@@ -32,20 +40,22 @@ typedef struct s_info
 
 typedef struct s_philo {
 	unsigned int			n_philos;
-	unsigned int			n_meals;
+	unsigned int			n_meals_to_have;
+	unsigned int			n_meals_had;
 	unsigned int			t_die;
 	unsigned int			t_eat;
 	unsigned int			t_sleep;
 	unsigned int			last_meal;
 	unsigned int			id;
-	int				is_full;
-	t_info				*info;
-	pthread_t			reaper;
+	int						is_full;
+	t_info					*info;
+	pthread_t				reaper;
 	pthread_mutex_t			*r_fork;
 	pthread_mutex_t			*l_fork;
 	pthread_mutex_t			m_last_meal;
 }	t_philo;
 
+unsigned int	char_to_uint(char *str);
 int				malloc_threads_and_forks(pthread_t **thread,
 					pthread_mutex_t **forks, t_philo *philo);
 t_philo			*init_philo(int argc, char **argv, pthread_t *thread,
@@ -58,6 +68,9 @@ unsigned int	get_time(void);
 void			init_info(t_info *info, t_philo *philo);
 void			launch_threading(pthread_t *thread, t_info *info,
 					t_philo *philo, pthread_mutex_t *forks);
-void			destroy_mutex(t_info *info, t_philo *philo, pthread_mutex_t *forks);
+void			destroy_mutex(t_info *info, t_philo *philo,
+					pthread_mutex_t *forks);
+void			routine(t_philo *philo);
+void			ft_usleep(unsigned int time_in_ms);
 
 #endif

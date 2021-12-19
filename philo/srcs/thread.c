@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 05:36:59 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/17 16:51:25 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 01:30:47 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	destroy_mutex(t_info *info, t_philo *philo, pthread_mutex_t *forks)
 void	*is_dead(void *arg)
 {
 	t_philo	*philo;
-	int	stop;
+	int		stop;
 
 	philo = (t_philo *)arg;
 	stop = 0;
@@ -57,9 +57,9 @@ void	*is_dead(void *arg)
 		{
 			pthread_mutex_unlock(&philo->m_last_meal);
 			pthread_mutex_lock(&philo->info->m_msg);
-			printf("philo n%d died\n", philo->id);
+			printf("%d   %d   died\n", get_time() - philo->info->t_start, philo->id);
 			pthread_mutex_unlock(&philo->info->m_msg);
-			philo->info->is_dead = 1; // added
+			philo->info->is_dead = 1;
 		}
 		else
 			pthread_mutex_unlock(&philo->m_last_meal);
@@ -70,7 +70,7 @@ void	*is_dead(void *arg)
 	return (NULL);
 }
 
-void	*routine(void *arg)
+void	*activity(void *arg)
 {
 	t_philo	*philo;
 	int		stop;
@@ -80,16 +80,16 @@ void	*routine(void *arg)
 	philo->last_meal = philo->info->t_start;
 	if (pthread_create(&philo->reaper, NULL, &is_dead, philo))
 	{
-		stop = 1;
-		ft_putendl_fd("pthread_create has failed", 2);
+		free_vars(NULL, NULL, NULL, PTHREAD_CREATE);
+		return (NULL);
 	}
-	pthread_join(philo->reaper, NULL);
+	pthread_detach(philo->reaper);
 	while (!stop)
 	{
-		activity(philo);
 		pthread_mutex_lock(&philo->info->m_stop);
 		stop = philo->info->is_dead + philo->is_full;
 		pthread_mutex_unlock(&philo->info->m_stop);
+		routine(philo); // was first instruction
 	}
 	return (NULL);
 }
@@ -103,15 +103,21 @@ void	launch_threading(pthread_t *thread, t_info *info, t_philo *philo,
 	info->t_start = get_time();
 	while (i < info->n_philos)
 	{
-		if (pthread_create(&thread[i], NULL, &routine, &philo[i]))
-			free_vars(philo, thread, forks, -2);
+		if (pthread_create(&thread[i], NULL, &activity, &philo[i]))
+		{
+			free_vars(philo, thread, forks, PTHREAD_CREATE); 
+			return ;
+		}
 		i++;
 	}
 	i = 0;
 	while (i < info->n_philos)
 	{
 		if (pthread_join(thread[i], NULL))
-			free_vars(philo, thread, forks, -3);
+		{
+			free_vars(philo, thread, forks, PTHREAD_JOIN); 
+			return ;
+		}
 		i++;
 	}
 }
