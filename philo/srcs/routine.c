@@ -6,7 +6,7 @@
 /*   By: htizi <htizi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:56:20 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 18:14:33 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 22:48:09 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ void	print_status(t_philo *philo, int index)
 	if (index == 0)
 	{
 		philo->info->is_dead = 1;
-		printf("%d   %d   died\n", get_time() - philo->info->t_start, philo->id);
+		printf("%7d %3d died\n", get_time() - philo->info->t_start, philo->id);
 	}
 	pthread_mutex_unlock(&philo->info->m_stop);
 	if (index == 1)
-		printf("%d   %d   has taken a fork\n",
+		printf("%7d %3d has taken a fork\n",
 			get_time() - philo->info->t_start, philo->id);
 	if (index == 2)
-		printf("%d   %d   is eating\n",
+		printf("%7d %3d is eating\n",
 			get_time() - philo->info->t_start, philo->id);
 	if (index == 3)
-		printf("%d   %d   is sleeping\n",
+		printf("%7d %3d is sleeping\n",
 			get_time() - philo->info->t_start, philo->id);
 	if (index == 4)
-		printf("%d   %d   is thinking\n",
+		printf("%7d %3d is thinking\n",
 			get_time() - philo->info->t_start, philo->id);
 }
 
@@ -55,8 +55,8 @@ void	right_handed(t_philo *philo)
 	pthread_mutex_lock(philo->l_fork);
 	pthread_mutex_lock(&philo->info->m_msg);
 	print_status(philo, 1);
-	pthread_mutex_unlock(&philo->info->m_msg);// should I delete it
-	pthread_mutex_lock(&philo->info->m_msg);// should I delete it
+	pthread_mutex_unlock(&philo->info->m_msg);
+	pthread_mutex_lock(&philo->info->m_msg);
 	print_status(philo, 2);
 	pthread_mutex_unlock(&philo->info->m_msg);
 	philo->n_meals_had++;
@@ -122,6 +122,6 @@ void	routine(t_philo *philo)
 	pthread_mutex_lock(&philo->info->m_msg);
 	print_status(philo, 4);
 	pthread_mutex_unlock(&philo->info->m_msg);
-//	if (philo->n_philos % 2 != 0)
-//		ft_usleep(100);
+	if (philo->n_philos % 2 != 0)
+		ft_usleep(100);
 }

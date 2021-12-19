@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 16:10:30 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 22:46:30 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	free_vars(t_philo *philo, pthread_t *thread,
 			perror("pthread_create has failed");
 		if (flag == PTHREAD_JOIN)
 			perror("pthread_join has failed");
-		pthread_mutex_unlock(&philo->info->m_msg); // p-e à suppr
+		pthread_mutex_unlock(&philo->info->m_msg);
 		return (0);
 	}
 	if (philo)

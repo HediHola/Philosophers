@@ -6,7 +6,7 @@
 #    By: htizi <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/12 15:14:35 by htizi             #+#    #+#              #
-#    Updated: 2021/12/19 16:17:16 by htizi            ###   ########.fr        #
+#    Updated: 2021/12/19 22:49:24 by htizi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS			=		main.c			\
 SRCS_BASENAME	=		$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS			=		$(SRCS_BASENAME:.c=.o)
 CC				=		clang
-FLAGS			=		-Werror -Wall -Wextra -I $(INC_DIR) -fsanitize=thread 
+FLAGS			=		-Werror -Wall -Wextra -I $(INC_DIR) #-fsanitize=thread 
 
 .c.o			:
 				$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
