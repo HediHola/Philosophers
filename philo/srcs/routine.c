@@ -6,7 +6,7 @@
 /*   By: htizi <htizi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:56:20 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 17:19:13 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 18:14:33 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ void	routine(t_philo *philo)
 	pthread_mutex_lock(&philo->info->m_msg);
 	print_status(philo, 4);
 	pthread_mutex_unlock(&philo->info->m_msg);
-	if (philo->n_philos % 2 != 0)
-		ft_usleep(100);
+//	if (philo->n_philos % 2 != 0)
+//		ft_usleep(100);
 }
