@@ -6,27 +6,11 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 05:36:59 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 17:28:23 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 23:04:11 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i])
-		{
-			write(fd, &s[i], 1);
-			i++;
-		}
-		write(fd, "\n", 1);
-	}
-}
 
 void	destroy_mutex(t_info *info, t_philo *philo, pthread_mutex_t *forks)
 {
