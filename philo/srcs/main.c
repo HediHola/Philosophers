@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 22:46:30 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 23:55:15 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	check_arg(int argc, char **argv)
 		}
 		i++;
 	}
+	if ((char_to_uint(argv[1]) == 0))
+		return (-1);
 	if (argc == 6 && (char_to_uint(argv[5]) == 0))
 		return (-1);
 	return (1);
