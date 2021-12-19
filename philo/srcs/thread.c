@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 05:36:59 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 01:30:47 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/19 16:11:37 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,8 @@ void	*is_dead(void *arg)
 		{
 			pthread_mutex_unlock(&philo->m_last_meal);
 			pthread_mutex_lock(&philo->info->m_msg);
-			printf("%d   %d   died\n", get_time() - philo->info->t_start, philo->id);
+			print_status(philo, 0);
 			pthread_mutex_unlock(&philo->info->m_msg);
-			philo->info->is_dead = 1;
 		}
 		else
 			pthread_mutex_unlock(&philo->m_last_meal);
@@ -86,10 +85,10 @@ void	*activity(void *arg)
 	pthread_detach(philo->reaper);
 	while (!stop)
 	{
+		routine(philo);
 		pthread_mutex_lock(&philo->info->m_stop);
 		stop = philo->info->is_dead + philo->is_full;
 		pthread_mutex_unlock(&philo->info->m_stop);
-		routine(philo); // was first instruction
 	}
 	return (NULL);
 }
@@ -105,7 +104,7 @@ void	launch_threading(pthread_t *thread, t_info *info, t_philo *philo,
 	{
 		if (pthread_create(&thread[i], NULL, &activity, &philo[i]))
 		{
-			free_vars(philo, thread, forks, PTHREAD_CREATE); 
+			free_vars(philo, thread, forks, PTHREAD_CREATE);
 			return ;
 		}
 		i++;
@@ -115,7 +114,7 @@ void	launch_threading(pthread_t *thread, t_info *info, t_philo *philo,
 	{
 		if (pthread_join(thread[i], NULL))
 		{
-			free_vars(philo, thread, forks, PTHREAD_JOIN); 
+			free_vars(philo, thread, forks, PTHREAD_JOIN);
 			return ;
 		}
 		i++;
