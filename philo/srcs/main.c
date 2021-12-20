@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:37:34 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 23:55:15 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:57:02 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	free_vars(t_philo *philo, pthread_t *thread,
 	if (flag == MALLOC)
 	{		
 		perror("malloc error");
-		exit (0);
+		return (1);
 	}
 	return (0);
 }
@@ -83,8 +83,11 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	philo = init_philo(argc, argv, thread, forks);
+	if (!philo)
+		return (1);
 	init_info(&info, philo);
-	malloc_threads_and_forks(&thread, &forks, philo);
+	if (malloc_threads_and_forks(&thread, &forks, philo))
+		return (1);
 	distribute_forks(philo, forks, info.n_philos);
 	launch_threading(thread, &info, philo, forks);
 	destroy_mutex(&info, philo, forks);

@@ -6,7 +6,7 @@
 /*   By: htizi <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 12:25:29 by htizi             #+#    #+#             */
-/*   Updated: 2021/12/19 17:27:11 by htizi            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:47:25 by htizi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,16 @@ int	malloc_threads_and_forks(pthread_t **thread, pthread_mutex_t **forks,
 {
 	*thread = malloc(sizeof(pthread_t) * philo[0].n_philos);
 	if (!thread)
-		free_vars(philo, *thread, *forks, MALLOC);
+	{
+		if (free_vars(philo, *thread, *forks, MALLOC))
+			return (1);
+	}
 	*forks = malloc(sizeof(pthread_mutex_t) * philo[0].n_philos);
 	if (!forks)
-		free_vars(philo, *thread, *forks, MALLOC);
+	{
+		if (free_vars(philo, *thread, *forks, MALLOC))
+			return (1);
+	}
 	return (0);
 }
 
@@ -66,8 +72,8 @@ t_philo	*init_philo(int argc, char **argv, pthread_t *thread,
 	i = 0;
 	n_philo = char_to_uint(argv[1]);
 	philo = malloc(sizeof(t_philo) * n_philo);
-	if (!philo)
-		free_vars(philo, thread, forks, MALLOC);
+	if (!philo && free_vars(philo, thread, forks, MALLOC))
+		return (NULL);
 	while (i < n_philo)
 	{
 		philo[i].n_philos = n_philo;
